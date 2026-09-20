@@ -1,0 +1,34 @@
+﻿name: Test Deploy Windows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Verifier le serveur
+        shell: pwsh
+        run: |
+          Write-Host "Serveur CI/CD :"
+          hostname
+          Write-Host "Utilisateur :"
+          whoami
+
+      - name: Deployer le script
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path "C:\Deploy" -Force
+          Copy-Item ".\deploy-test.ps1" "C:\Deploy\deploy-test.ps1" -Force
+
+          Write-Host "Fichier deploye :"
+          Get-Item "C:\Deploy\deploy-test.ps1"
+
+      - name: Tester le fichier deploye
+        shell: pwsh
+        run: |
+          & "C:\Deploy\deploy-test.ps1"
