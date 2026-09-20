@@ -23,7 +23,7 @@ jobs:
           whoami
 
       - name: Deployer le script
-        shell: pwsh
+        shell: powershell
         run: |
           New-Item -ItemType Directory -Path "C:\Deploy" -Force
           Copy-Item ".\deploy-test.ps1" "C:\Deploy\deploy-test.ps1" -Force
@@ -32,6 +32,6 @@ jobs:
           Get-Item "C:\Deploy\deploy-test.ps1"
 
       - name: Tester le fichier deploye
-        shell: pwsh
+        shell: powershell
         run: |
           & "C:\Deploy\deploy-test.ps1"
